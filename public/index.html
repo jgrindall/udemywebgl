@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<script src="js/underscore.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.6.1/gl-matrix-min.js"></script>
+
+		<style type="text/css">
+			canvas{
+				border: 2px solid #bbb;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="gameCanvas" width="800" height="600"></canvas>
+		<script type="vertexShader" id="vshader">
+			#version 300 es
+			in vec3 position;
+			in vec4 color;
+			out vec4 fcolor;
+
+			uniform mat4 modelMat;
+			uniform mat4 viewMat;
+			uniform mat4 projMat;
+
+
+			void main(){
+				//gl_Position = vec4(position, 1);
+				gl_Position = projMat * viewMat * modelMat * vec4(position, 1);
+				fcolor = color;
+			}
+
+		</script>
+
+		<script type="fragmentShader" id="fshader">
+			#version 300 es
+			precision mediump float;
+			in vec4 fcolor;
+			out vec4 fcolor2;
+			void main(){
+				fcolor2 = fcolor;
+			}
+
+		</script>
+
+
+		<script src="js/clrs.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
